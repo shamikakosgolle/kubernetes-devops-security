@@ -13,7 +13,7 @@ pipeline {
               sh "mvn test"
                  post {
         always {
-          junit 'target/surefirekosa-reports/*.xml'
+          junit 'target/surefire-reports/*.xml'
          
         }
             }
