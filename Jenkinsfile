@@ -24,7 +24,7 @@ pipeline {
 
     stage('Docker Build and Push') {
       steps {
-        withDockerRegistry([credentialsId: "doc", url: ""]) {
+        withDockerRegistry([credentialsId: "docker", url: ""]) {
           sh 'printenv'
           sh 'docker build -t shamikakosgolle/madu:""$GIT_COMMIT"" .'
           sh 'docker push shamikakosgolle/madu:""$GIT_COMMIT""'
