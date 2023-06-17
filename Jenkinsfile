@@ -1,6 +1,8 @@
 pipeline {
   agent any
-
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('docker')
+  }
   stages {
 
     stage('Build Artifact - Maven') {
@@ -24,11 +26,12 @@ pipeline {
 
     stage('Docker Build and Push') {
       steps {
-        withDockerRegistry([credentialsId: "docker", url: ""]) {
+        
           sh 'printenv'
+          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
           sh 'docker build -t shamikakosgolle/madu:""$GIT_COMMIT"" .'
           sh 'docker push shamikakosgolle/madu:""$GIT_COMMIT""'
-        }
+        
       }
     }
   }
