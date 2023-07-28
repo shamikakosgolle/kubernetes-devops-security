@@ -26,8 +26,8 @@ pipeline {
       steps {
         withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
           sh 'printenv'
-          sh 'docker build -t shamikakosgolle/kosa:""$GIT_COMMIT"" .'
-          sh 'docker push shamikakosgolle/kosa:""$GIT_COMMIT""'
+          sh 'docker build -t shamikakosgolle/madu:""$GIT_COMMIT"" .'
+          sh 'docker push shamikakosgolle/madu:""$GIT_COMMIT""'
         }
       }
     }
@@ -35,7 +35,7 @@ pipeline {
         stage('Kubernetes Deployment - DEV') {
       steps {
         withKubeConfig([credentialsId: 'kube']) {
-          sh "sed -i 's#replace#shamikakosgolle/kosa:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
+          sh "sed -i 's#replace#shamikakosgolle/madu:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
           sh "kubectl apply -f k8s_deployment_service.yaml"
   }
 }
