@@ -24,15 +24,6 @@ pipeline {
       }
     }
 
-    stage('Docker Build and Push') {
-      steps {
-        
-          sh 'printenv'
-          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-          sh 'docker build -t shamikakosgolle/madu:""$GIT_COMMIT"" .'
-          sh 'docker push shamikakosgolle/madu:""$GIT_COMMIT""'
-        
-      }
-    }
+
   }
 }
