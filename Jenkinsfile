@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Build Artifact - Mavenc') {
+    stage('Build Artifact - Mavencc') {
       steps {
         sh "mvn clean package -DskipTests=true"
         archive 'target/*.jar'
