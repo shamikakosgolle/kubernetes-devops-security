@@ -31,12 +31,19 @@ pipeline {
       }
     }
 
-    stage('Sonar Cube') {
+
+    stage('SonarQube - SAST') {
       steps {
-        sh " mvn sonar:sonar -Dsonar.projectKey=sonarpipe -Dsonar.host.url=http://104.131.177.241:9000 -Dsonar.login=fbe507d14f68d1051f557c6899c2c7f04a0d97c3"
+        withSonarQubeEnv('sonar') {
+          sh "mvn sonar:sonar -Dsonar.projectKey=sonarpipe -Dsonar.host.url=http://104.131.177.241:9000 -Dsonar.login=fbe507d14f68d1051f557c6899c2c7f04a0d97c3"
+        }
+        timeout(time: 2, unit: 'MINUTES') {
+          script {
+            waitForQualityGate abortPipeline: true
+          }
+        }
       }
     }
-
    
 
     stage('Docker Build and Push') {
