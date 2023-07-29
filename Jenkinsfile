@@ -32,6 +32,14 @@ pipeline {
       }
     }
 
+    stage('Build Artifact - Maven') {
+      steps {
+        sh " mvn sonar:sonar -Dsonar.projectKey=sonarpipe -Dsonar.host.url=http://104.131.177.241:9000 -Dsonar.login=fbe507d14f68d1051f557c6899c2c7f04a0d97c3"
+      }
+    }
+
+   
+
     stage('Docker Build and Push') {
       steps {
         withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
